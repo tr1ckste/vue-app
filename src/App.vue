@@ -9,8 +9,18 @@
     counter: {{ counter }}
   </div>
   <div class="buttons">
-    <button class="green-bg" id="plus" v-on:click="plus">+</button>
-    <button class="red-bg" id="minus" v-on:click="minus">-</button>
+    <button
+    :disabled="disabledPlus"
+    class="green-bg"
+    id="plus"
+    v-on:click="plus"
+    >+</button>
+    <button
+    :disabled="disabledMinus"
+    class="red-bg"
+    id="minus"
+    v-on:click="minus"
+    >-</button>
   </div>
   <div>
     <ul>
@@ -34,6 +44,8 @@ export default {
   data() {
     return {
       counter: 0,
+      disabledPlus: false,
+      disabledMinus: false,
       array: [
         1,
         2,
@@ -54,11 +66,21 @@ export default {
   },
   methods: {
     plus() {
-      if (this.counter === 20) return;
+      const condition = this.counter === 20;
+      if (condition) {
+        this.disabledPlus = condition;
+        return;
+      }
+      this.disabledMinus = false;
       this.counter++;
     },
     minus() {
-      if (this.counter === 0) return;
+      const condition = this.counter === 0;
+      if (condition) {
+        this.disabledMinus = condition;
+        return;
+      }
+      this.disabledPlus = false;
       this.counter--;
     }
   }
