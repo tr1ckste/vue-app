@@ -15,16 +15,16 @@
   </div>
   <div class="buttons">
     <button
-    :disabled="counter === 20"
+    :disabled="counter === maxValue"
     class="green-bg"
     id="plus"
-    v-on:click="plus"
+    @click="plus"
     >+</button>
     <button
-    :disabled="counter === 0"
+    :disabled="counter === minValue"
     class="red-bg"
     id="minus"
-    v-on:click="minus"
+    @click="minus"
     >-</button>
   </div>
   <div>
@@ -48,6 +48,8 @@ export default {
   name: 'App',
   data() {
     return {
+      maxValue: 20,
+      minValue: 0,
       counter: 0,
       counterFromInput: null,
       array: [
@@ -70,18 +72,19 @@ export default {
   },
   methods: {
     plus() {
-      const condition = this.counter === 20;
+      const condition = this.counter === this.maxValue;
       if (condition) return;
       this.counter++;
     },
     minus() {
-      const condition = this.counter === 0;
+      const condition = this.counter === this.minValue;
       if (condition) return;
       this.counter--;
     },
     writeDownInput() {
       const num = this.counterFromInput;
-      if (num <= 20 && num >= 0) this.counter = num;
+      const { maxValue, minValue } = this;
+      if (num <= maxValue && num >= minValue) this.counter = num;
     }
   }
 }
