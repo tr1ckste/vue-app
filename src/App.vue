@@ -1,4 +1,9 @@
 <template>
+  <input
+    v-model="counterFromInput"
+    type="number"
+    @keypress.enter="writeDownInput"
+    >
   <div
   class="counter" 
   :class="{
@@ -10,13 +15,13 @@
   </div>
   <div class="buttons">
     <button
-    :disabled="disabledPlus"
+    :disabled="counter === 20"
     class="green-bg"
     id="plus"
     v-on:click="plus"
     >+</button>
     <button
-    :disabled="disabledMinus"
+    :disabled="counter === 0"
     class="red-bg"
     id="minus"
     v-on:click="minus"
@@ -44,8 +49,7 @@ export default {
   data() {
     return {
       counter: 0,
-      disabledPlus: false,
-      disabledMinus: false,
+      counterFromInput: null,
       array: [
         1,
         2,
@@ -67,21 +71,17 @@ export default {
   methods: {
     plus() {
       const condition = this.counter === 20;
-      if (condition) {
-        this.disabledPlus = condition;
-        return;
-      }
-      this.disabledMinus = false;
+      if (condition) return;
       this.counter++;
     },
     minus() {
       const condition = this.counter === 0;
-      if (condition) {
-        this.disabledMinus = condition;
-        return;
-      }
-      this.disabledPlus = false;
+      if (condition) return;
       this.counter--;
+    },
+    writeDownInput() {
+      const num = this.counterFromInput;
+      if (num <= 20 && num >= 0) this.counter = num;
     }
   }
 }
