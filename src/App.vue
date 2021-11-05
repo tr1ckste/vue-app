@@ -85,6 +85,7 @@ export default {
       const num = this.counterFromInput;
       const { maxValue, minValue } = this;
       if (num <= maxValue && num >= minValue) this.counter = num;
+      this.counterFromInput = 0;
     }
   }
 }
